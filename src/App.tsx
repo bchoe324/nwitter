@@ -44,6 +44,7 @@ const GlobalStyles = createGlobalStyle`
   ${reset};
   * {
     box-sizing: border-box;
+    --primary-color: #54A8DE;
   }
   body {
     background-color: #000;

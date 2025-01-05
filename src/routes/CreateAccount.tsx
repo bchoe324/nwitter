@@ -1,50 +1,18 @@
-import styled from "styled-components";
 import React, { useState } from "react";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../firebase";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { FirebaseError } from "firebase/app";
-
-const Wapper = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 60%;
-  padding: 50px 0;
-`;
-
-const Title = styled.h1`
-  font-size: 42px;
-`;
-
-const Form = styled.form`
-  margin-top: 50px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 100%;
-`;
-
-const Input = styled.input`
-  padding: 10px 20px;
-  border-radius: 50px;
-  border: 0 none;
-  width: 100%;
-  font-size: 16px;
-  &[type="submit"] {
-    cursor: pointer;
-    &:hover {
-      opacity: 0.9;
-    }
-  }
-`;
-
-const Error = styled.span`
-  font-weight: 600;
-  color: tomato;
-  margin-top: 15px;
-`;
+import logo from "../../public/logo.png";
+import {
+  Wapper,
+  Title,
+  Form,
+  Input,
+  Error,
+  Switcher,
+} from "../components/AuthComponents";
+import GithubButton from "../components/GithubButton";
 
 export default function CreateAccount() {
   const nav = useNavigate();
@@ -89,7 +57,7 @@ export default function CreateAccount() {
       nav("/", { replace: true });
     } catch (e) {
       //setError
-      console.log(e);
+      console.error(e);
       if (e instanceof FirebaseError) {
         setError(e.message);
       }
@@ -100,7 +68,9 @@ export default function CreateAccount() {
 
   return (
     <Wapper>
-      <Title>Join 🐦</Title>
+      <Title>
+        Join <img src={logo} />
+      </Title>
       {/* onSubmit 함수는 form 태그에 */}
       <Form onSubmit={onSubmit}>
         <Input
@@ -130,6 +100,10 @@ export default function CreateAccount() {
         <Input type="submit" value={isLoading ? "Loading" : "Create Account"} />
       </Form>
       {error !== "" ? <Error>{error}</Error> : null}
+      <Switcher>
+        Already have an account? <Link to={"/login"}>Log in &rarr;</Link>
+      </Switcher>
+      <GithubButton />
     </Wapper>
   );
 }
