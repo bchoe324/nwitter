@@ -9,6 +9,7 @@ import Login from "./routes/Login";
 import CreateAccount from "./routes/CreateAccount";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import LoadingScreen from "./components/LoadingScreen";
+import ForgotPassword from "./routes/ForgotPassword";
 import { auth } from "./firebase";
 
 const router = createBrowserRouter([
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
     path: "/create-account",
     element: <CreateAccount />,
   },
+  {
+    path: "forgot-password",
+    element: <ForgotPassword />,
+  },
 ]);
 
 const GlobalStyles = createGlobalStyle`
@@ -45,6 +50,7 @@ const GlobalStyles = createGlobalStyle`
   * {
     box-sizing: border-box;
     --primary-color: #54A8DE;
+    --gray: rgb(83, 100, 113);
   }
   body {
     background-color: #000;

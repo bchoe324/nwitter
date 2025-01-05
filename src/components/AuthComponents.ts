@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Wapper = styled.div`
+export const Wrapper = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -8,6 +8,7 @@ export const Wapper = styled.div`
   width: 60%;
   max-width: 400px;
   padding: 50px 0;
+  font-size: 16px;
 `;
 
 export const Title = styled.h1`
@@ -25,6 +26,8 @@ export const Form = styled.form`
   margin-top: 40px;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
   gap: 10px;
   width: 100%;
 `;
@@ -34,7 +37,6 @@ export const Input = styled.input`
   border-radius: 50px;
   border: 0 none;
   width: 100%;
-  font-size: 16px;
   &[type="submit"] {
     cursor: pointer;
     background-color: var(--primary-color);
@@ -45,15 +47,59 @@ export const Input = styled.input`
   }
 `;
 
+export const Message = styled.div`
+  margin-top: 20px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+  a {
+    color: var(--primary-color);
+  }
+`;
+
+export const Divider = styled.div`
+  margin-top: 20px;
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  &::before,
+  &::after {
+    content: "";
+    width: 100%;
+    height: 1px;
+    background-color: var(--gray);
+  }
+`;
+
 export const Error = styled.span`
   font-weight: 600;
   color: tomato;
   margin-top: 15px;
 `;
 
-export const Switcher = styled.span`
+export const ResetButton = styled.span`
   margin-top: 20px;
-  font-size: 16px;
+  padding: 10px 20px;
+  border-radius: 50px;
+  background-color: #000;
+  border: 1px solid var(--gray);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  a {
+    color: #fff;
+    text-decoration: none;
+  }
+`;
+
+export const Switcher = styled.span`
+  margin-top: 40px;
   a {
     color: var(--primary-color);
   }

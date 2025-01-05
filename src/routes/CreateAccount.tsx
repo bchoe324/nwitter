@@ -5,12 +5,13 @@ import { useNavigate, Link } from "react-router-dom";
 import { FirebaseError } from "firebase/app";
 import logo from "../../public/logo.png";
 import {
-  Wapper,
+  Wrapper,
   Title,
   Form,
   Input,
   Error,
   Switcher,
+  Divider,
 } from "../components/AuthComponents";
 import GithubButton from "../components/GithubButton";
 
@@ -67,7 +68,7 @@ export default function CreateAccount() {
   };
 
   return (
-    <Wapper>
+    <Wrapper>
       <Title>
         Join <img src={logo} />
       </Title>
@@ -100,10 +101,11 @@ export default function CreateAccount() {
         <Input type="submit" value={isLoading ? "Loading" : "Create Account"} />
       </Form>
       {error !== "" ? <Error>{error}</Error> : null}
+      <Divider>or</Divider>
+      <GithubButton />
       <Switcher>
         Already have an account? <Link to={"/login"}>Log in &rarr;</Link>
       </Switcher>
-      <GithubButton />
-    </Wapper>
+    </Wrapper>
   );
 }

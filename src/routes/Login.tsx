@@ -5,12 +5,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { FirebaseError } from "firebase/app";
 import logo from "../../public/logo.png";
 import {
-  Wapper,
+  Wrapper,
   Title,
   Form,
   Input,
+  Divider,
   Error,
   Switcher,
+  ResetButton,
 } from "../components/AuthComponents";
 import GithubButton from "../components/GithubButton";
 
@@ -51,7 +53,7 @@ export default function Login() {
   };
 
   return (
-    <Wapper>
+    <Wrapper>
       <Title>
         Log into <img src={logo} />
       </Title>
@@ -76,11 +78,15 @@ export default function Login() {
         <Input type="submit" value={isLoading ? "Loading" : "Log in"} />
       </Form>
       {error !== "" ? <Error>{error}</Error> : null}
+      <Divider>or</Divider>
+      <GithubButton />
+      <ResetButton>
+        <Link to={"/forgot-password"}>Forgot your password?</Link>
+      </ResetButton>
       <Switcher>
         Don't have an account?{" "}
         <Link to={"/create-account"}>Create one &rarr;</Link>
       </Switcher>
-      <GithubButton />
-    </Wapper>
+    </Wrapper>
   );
 }
