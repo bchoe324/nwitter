@@ -17,10 +17,11 @@ const Button = styled.span`
   align-items: center;
   justify-content: center;
   color: #000;
+  cursor: pointer;
 `;
 
 const Logo = styled.img`
-  height: 25px;
+  height: 24px;
   width: auto;
 `;
 
