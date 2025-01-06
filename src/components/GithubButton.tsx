@@ -29,7 +29,6 @@ export default function GithubButton() {
   const nav = useNavigate();
   const onClick = async () => {
     try {
-      // TODO: cordova는 뭐고 왜 거기서 가져오면 안됨?
       const provider = new GithubAuthProvider();
       await signInWithPopup(auth, provider);
       nav("/", { replace: true });
