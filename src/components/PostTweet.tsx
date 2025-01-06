@@ -1,4 +1,8 @@
+import { useState } from "react";
 import styled from "styled-components";
+import { auth, db, storage } from "../firebase";
+import { addDoc, collection, updateDoc } from "firebase/firestore";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 const Form = styled.form`
   padding: 20px;
@@ -12,9 +16,10 @@ const Textarea = styled.textarea`
   background-color: #000;
   color: #fff;
   resize: none;
-  white-space: nowrap;
+
   overflow-x: hidden;
   &::placeholder {
+    white-space: nowrap;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
       Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
       sans-serif;
@@ -23,6 +28,13 @@ const Textarea = styled.textarea`
   }
   &:focus {
     outline: 0;
+  }
+`;
+
+const ImagePreview = styled.div`
+  margin-bottom: 20px;
+  img {
+    width: 80px;
   }
 `;
 
@@ -54,12 +66,82 @@ const SubmitButton = styled.input`
   padding: 8px 20px;
   border: 0 none;
   border-radius: 25px;
+  &:hover,
+  &:active {
+    opacity: 0.9;
+  }
 `;
 
 export default function PostTweet() {
+  const [isLoading, setLoading] = useState(false);
+  const [text, setText] = useState("");
+  // TODO: type...언제 어떻게 쓰는건지 모르겠다
+  const [file, setFile] = useState<File | null>(null);
+  const [url, setUrl] = useState("");
+
+  const onChangeText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setText(e.target.value);
+  };
+
+  const onChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { files } = e.target;
+    if (files && files.length === 1) {
+      if (files[0].size > 1024 ** 2) {
+        alert("Please add image that is 1MB or less");
+      } else {
+        setFile(files[0]);
+        setUrl(URL.createObjectURL(files[0]));
+      }
+    }
+  };
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const user = auth.currentUser;
+    if (!user || isLoading || text === "" || text.length > 200) return;
+    try {
+      setLoading(true);
+      const doc = await addDoc(collection(db, "tweets"), {
+        createdAt: Date.now(),
+        text,
+        name: user.displayName,
+        uid: user.uid,
+      });
+      if (file) {
+        const locationRef = ref(
+          storage,
+          `tweets/${user.uid}-${user.displayName}/${doc.id}`
+        );
+        const result = await uploadBytes(locationRef, file);
+        const uploadedUrl = await getDownloadURL(result.ref);
+        await updateDoc(doc, {
+          imageUrl: uploadedUrl,
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+      setText("");
+      setFile(null);
+      setUrl("");
+    }
+  };
+
   return (
-    <Form>
-      <Textarea placeholder="What is happening?!"></Textarea>
+    <Form onSubmit={onSubmit}>
+      <Textarea
+        placeholder="What is happening?!"
+        rows={5}
+        maxLength={200}
+        value={text}
+        onChange={onChangeText}
+      ></Textarea>
+      {url === "" ? null : (
+        <ImagePreview>
+          <img src={url} />
+        </ImagePreview>
+      )}
       <ButtonWrapper>
         <AttachPhoto>
           <label htmlFor="file">
@@ -80,9 +162,17 @@ export default function PostTweet() {
               />
             </svg>
           </label>
-          <input type="file" id="file" />
+          <input
+            type="file"
+            id="file"
+            accept="image/*"
+            onChange={onChangeFile}
+          />
         </AttachPhoto>
-        <SubmitButton type="submit" value="Tweet" />
+        <SubmitButton
+          type="submit"
+          value={isLoading ? "Posting..." : "Tweet"}
+        />
       </ButtonWrapper>
     </Form>
   );
