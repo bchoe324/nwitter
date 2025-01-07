@@ -5,7 +5,8 @@ import Tweet from "./Tweet";
 
 export interface ITweet {
   createdAt: number;
-  imageUrl: string;
+  //TODO: 옵셔널 체이닝??
+  imageUrl?: string;
   name: string;
   text: string;
   uid: string;
@@ -41,10 +42,10 @@ export default function Timeline() {
   }, []);
 
   return (
-    <>
+    <div>
       {tweets.map((tweet) => (
         <Tweet key={tweet.id} {...tweet} />
       ))}
-    </>
+    </div>
   );
 }
