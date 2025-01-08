@@ -14,9 +14,12 @@ const Wrapper = styled.article`
 `;
 
 const Collumn = styled.div`
+  line-height: 1.5;
   .image_wrapper {
-    border: 1px solid gray;
     border-radius: 12px;
+    overflow: hidden;
+    font-size: 0;
+    width: 100%;
     img {
       width: 100%;
       height: auto;
