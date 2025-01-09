@@ -49,7 +49,6 @@ export default function Timeline() {
     };
     fetchTweets();
     return () => {
-      console.log("+++++++");
       unsubscribe && unsubscribe();
     };
   }, []);
