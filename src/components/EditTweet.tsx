@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { auth, db, storage } from "../firebase";
-import { addDoc, collection, updateDoc } from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { ITweet } from "./Timeline";
 import {
-  Form,
+  EditForm,
   Textarea,
   ImagePreview,
   ButtonWrapper,
@@ -11,12 +12,21 @@ import {
   SubmitButton,
 } from "./EditorComponent";
 
-export default function PostTweet() {
+interface EditTweetProps
+  extends Pick<ITweet, "text" | "imageUrl" | "uid" | "id"> {
+  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export default function EditTweet({
+  text,
+  imageUrl,
+  id,
+  setModalOpen,
+}: EditTweetProps) {
   const [isLoading, setLoading] = useState(false);
-  const [text, setText] = useState("");
-  // TODO: type...언제 어떻게 쓰는건지 모르겠다
+  const [tweetText, setText] = useState(text);
   const [file, setFile] = useState<File | null>(null);
-  const [url, setUrl] = useState("");
+  const [url, setUrl] = useState(imageUrl);
 
   const onChangeText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value);
@@ -37,23 +47,25 @@ export default function PostTweet() {
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const user = auth.currentUser;
-    if (!user || isLoading || text === "" || text.length > 200) return;
+    if (!user || isLoading || tweetText === "" || tweetText.length > 200)
+      return;
     try {
       setLoading(true);
-      const doc = await addDoc(collection(db, "tweets"), {
-        createdAt: Date.now(),
-        text,
-        name: user.displayName,
-        uid: user.uid,
+
+      const docRef = doc(db, "tweets", id);
+      await updateDoc(docRef, {
+        text: tweetText,
       });
       if (file) {
+        // 이미지 오버라이트
         const locationRef = ref(
           storage,
-          `tweets/${user.uid}-${user.displayName}/${doc.id}`
+          `tweets/${user.uid}-${user.displayName}/${id}`
         );
+
         const result = await uploadBytes(locationRef, file);
         const uploadedUrl = await getDownloadURL(result.ref);
-        await updateDoc(doc, {
+        await updateDoc(docRef, {
           imageUrl: uploadedUrl,
         });
       }
@@ -64,16 +76,17 @@ export default function PostTweet() {
       setText("");
       setFile(null);
       setUrl("");
+      setModalOpen(false);
     }
   };
 
   return (
-    <Form onSubmit={onSubmit}>
+    <EditForm onSubmit={onSubmit}>
       <Textarea
         placeholder="What is happening?!"
         rows={5}
         maxLength={200}
-        value={text}
+        value={tweetText}
         onChange={onChangeText}
       ></Textarea>
       {url === "" ? null : (
@@ -83,7 +96,7 @@ export default function PostTweet() {
       )}
       <ButtonWrapper>
         <AttachPhoto>
-          <label htmlFor="file">
+          <label htmlFor="file2">
             <svg
               dataSlot="icon"
               fill="none"
@@ -103,16 +116,13 @@ export default function PostTweet() {
           </label>
           <input
             type="file"
-            id="file"
+            id="file2"
             accept="image/*"
             onChange={onChangeFile}
           />
         </AttachPhoto>
-        <SubmitButton
-          type="submit"
-          value={isLoading ? "Posting..." : "Tweet"}
-        />
+        <SubmitButton type="submit" value={isLoading ? "Posting..." : "Save"} />
       </ButtonWrapper>
-    </Form>
+    </EditForm>
   );
 }
