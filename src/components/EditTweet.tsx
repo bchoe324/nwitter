@@ -98,14 +98,12 @@ export default function EditTweet({
         <AttachPhoto>
           <label htmlFor="file2">
             <svg
-              dataSlot="icon"
               fill="none"
               strokeWidth={1.5}
               stroke="currentColor"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
               aria-hidden="true"
-              alt="add photo"
             >
               <path
                 strokeLinecap="round"

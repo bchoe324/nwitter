@@ -92,8 +92,6 @@ export default function Tweet({ name, imageUrl, text, uid, id }: ITweet) {
           <ButtonWrapper>
             <Button onClick={() => setModalOpen(true)}>
               <svg
-                alt="edit"
-                dataSlot="icon"
                 fill="none"
                 strokeWidth={1.5}
                 stroke="currentColor"
@@ -110,8 +108,6 @@ export default function Tweet({ name, imageUrl, text, uid, id }: ITweet) {
             </Button>
             <Button onClick={onDelete}>
               <svg
-                alt="delete"
-                dataSlot="icon"
                 fill="none"
                 strokeWidth={1.5}
                 stroke="currentColor"

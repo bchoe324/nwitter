@@ -72,7 +72,6 @@ export default function Modal({
           <Title>{title}</Title>
           <Close onClick={onClose}>
             <svg
-              dataSlot="icon"
               fill="currentColor"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
