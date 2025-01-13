@@ -138,7 +138,7 @@ export default function Tweet({ name, imageUrl, text, uid, id }: ITweet) {
         </div>
       </Collumn>
       {isModalOpen ? (
-        <Modal onClose={onCloseModal}>
+        <Modal onClose={onCloseModal} title="Edit Tweet">
           <EditTweet
             text={text}
             imageUrl={imageUrl}

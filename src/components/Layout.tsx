@@ -77,7 +77,7 @@ export default function Layout() {
       <Header>
         <Menu>
           <MenuItem>
-            <Link to="/home">
+            <Link to="/">
               <svg
                 dataSlot="icon"
                 fill="currentColor"

@@ -12,7 +12,7 @@ import Tweet from "./Tweet";
 
 export interface ITweet {
   createdAt: number;
-  //TODO: 옵셔널 체이닝??
+  //NOTE: 옵셔널 체이닝??
   imageUrl?: string;
   name: string;
   text: string;

@@ -14,7 +14,7 @@ import {
 export default function PostTweet() {
   const [isLoading, setLoading] = useState(false);
   const [text, setText] = useState("");
-  // TODO: type...언제 어떻게 쓰는건지 모르겠다
+  // NOTE: type...언제 어떻게 쓰는건지 모르겠다
   const [file, setFile] = useState<File | null>(null);
   const [url, setUrl] = useState("");
 
