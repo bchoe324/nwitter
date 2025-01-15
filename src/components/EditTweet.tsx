@@ -58,10 +58,7 @@ export default function EditTweet({
       });
       if (file) {
         // 이미지 오버라이트
-        const locationRef = ref(
-          storage,
-          `tweets/${user.uid}-${user.displayName}/${id}`
-        );
+        const locationRef = ref(storage, `tweets/${user.uid}/${id}`);
 
         const result = await uploadBytes(locationRef, file);
         const uploadedUrl = await getDownloadURL(result.ref);

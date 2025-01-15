@@ -72,7 +72,7 @@ export default function Tweet({ name, imageUrl, text, uid, id }: ITweet) {
       await deleteDoc(doc(db, "tweets", id));
 
       if (imageUrl) {
-        const locationRef = ref(storage, `tweets/${uid}-${name}/${id}`);
+        const locationRef = ref(storage, `tweets/${uid}/${id}`);
         await deleteObject(locationRef);
       }
     } catch (error) {
