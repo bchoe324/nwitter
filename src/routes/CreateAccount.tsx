@@ -69,43 +69,48 @@ export default function CreateAccount() {
 
   return (
     <Wrapper>
-      <Title>
-        Join <img src={logo} />
-      </Title>
-      {/* onSubmit 함수는 form 태그에 */}
-      <Form onSubmit={onSubmit}>
-        <Input
-          name="name"
-          value={userInfo.name}
-          onChange={onChangeInput}
-          placeholder="name"
-          type="text"
-          required
-        />
-        <Input
-          name="email"
-          value={userInfo.email}
-          onChange={onChangeInput}
-          placeholder="email"
-          type="email"
-          required
-        />
-        <Input
-          name="password"
-          value={userInfo.password}
-          onChange={onChangeInput}
-          placeholder="password"
-          type="password"
-          required
-        />
-        <Input type="submit" value={isLoading ? "Loading" : "Create Account"} />
-      </Form>
-      {error !== "" ? <Error>{error}</Error> : null}
-      <Divider>or</Divider>
-      <GithubButton />
-      <Switcher>
-        Already have an account? <Link to={"/login"}>Log in &rarr;</Link>
-      </Switcher>
+      <div>
+        <Title>
+          Join <img src={logo} />
+        </Title>
+        {/* onSubmit 함수는 form 태그에 */}
+        <Form onSubmit={onSubmit}>
+          <Input
+            name="name"
+            value={userInfo.name}
+            onChange={onChangeInput}
+            placeholder="name"
+            type="text"
+            required
+          />
+          <Input
+            name="email"
+            value={userInfo.email}
+            onChange={onChangeInput}
+            placeholder="email"
+            type="email"
+            required
+          />
+          <Input
+            name="password"
+            value={userInfo.password}
+            onChange={onChangeInput}
+            placeholder="password"
+            type="password"
+            required
+          />
+          <Input
+            type="submit"
+            value={isLoading ? "Loading" : "Create Account"}
+          />
+        </Form>
+        {error !== "" ? <Error>{error}</Error> : null}
+        <Divider>or</Divider>
+        <GithubButton />
+        <Switcher>
+          Already have an account? <Link to={"/login"}>Log in &rarr;</Link>
+        </Switcher>
+      </div>
     </Wrapper>
   );
 }

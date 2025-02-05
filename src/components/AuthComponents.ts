@@ -1,14 +1,18 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 60%;
-  max-width: 400px;
-  padding: 50px 0;
+  height: 100vh;
   font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  > div {
+    width: 60%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 export const Title = styled.h1`

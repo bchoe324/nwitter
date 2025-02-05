@@ -54,39 +54,41 @@ export default function Login() {
 
   return (
     <Wrapper>
-      <Title>
-        Log into <img src={logo} />
-      </Title>
-      {/* onSubmit 함수는 form 태그에 */}
-      <Form onSubmit={onSubmit}>
-        <Input
-          name="email"
-          value={userInfo.email}
-          onChange={onChangeInput}
-          placeholder="email"
-          type="email"
-          required
-        />
-        <Input
-          name="password"
-          value={userInfo.password}
-          onChange={onChangeInput}
-          placeholder="password"
-          type="password"
-          required
-        />
-        <Input type="submit" value={isLoading ? "Loading" : "Log in"} />
-      </Form>
-      {error !== "" ? <Error>{error}</Error> : null}
-      <Divider>or</Divider>
-      <GithubButton />
-      <ResetButton>
-        <Link to={"/forgot-password"}>Forgot your password?</Link>
-      </ResetButton>
-      <Switcher>
-        Don't have an account?{" "}
-        <Link to={"/create-account"}>Create one &rarr;</Link>
-      </Switcher>
+      <div>
+        <Title>
+          Log into <img src={logo} />
+        </Title>
+        {/* onSubmit 함수는 form 태그에 */}
+        <Form onSubmit={onSubmit}>
+          <Input
+            name="email"
+            value={userInfo.email}
+            onChange={onChangeInput}
+            placeholder="email"
+            type="email"
+            required
+          />
+          <Input
+            name="password"
+            value={userInfo.password}
+            onChange={onChangeInput}
+            placeholder="password"
+            type="password"
+            required
+          />
+          <Input type="submit" value={isLoading ? "Loading" : "Log in"} />
+        </Form>
+        {error !== "" ? <Error>{error}</Error> : null}
+        <Divider>or</Divider>
+        <GithubButton />
+        <ResetButton>
+          <Link to={"/forgot-password"}>Forgot your password?</Link>
+        </ResetButton>
+        <Switcher>
+          Don't have an account?{" "}
+          <Link to={"/create-account"}>Create one &rarr;</Link>
+        </Switcher>
+      </div>
     </Wrapper>
   );
 }

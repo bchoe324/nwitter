@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { reset } from "styled-reset";
-import { createGlobalStyle, styled } from "styled-components";
+import { createGlobalStyle } from "styled-components";
 import Layout from "./components/Layout";
 import Home from "./routes/Home";
 import Profile from "./routes/Profile";
@@ -56,13 +56,20 @@ const GlobalStyles = createGlobalStyle`
   body {
     background-color: #000;
     color: #fff;
-  }
-`;
+    // firefox 
+    scrollbar-width: thin;
+    scrollbar-color: #999 transparent;
 
-const Wrapper = styled.div`
-  height: 100vh;
-  display: flex;
-  justify-content: center;
+    // webkit
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #999;
+      border-radius: 10px;
+    }
+  }
+  
 `;
 
 function App() {
@@ -77,10 +84,10 @@ function App() {
   }, []);
 
   return (
-    <Wrapper>
+    <>
       <GlobalStyles />
       {isLoading ? <LoadingScreen /> : <RouterProvider router={router} />}
-    </Wrapper>
+    </>
   );
 }
 

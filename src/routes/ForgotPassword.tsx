@@ -43,26 +43,28 @@ export default function ForgotPassword() {
   };
   return (
     <Wrapper>
-      <Title>Find my account</Title>
-      {/* onSubmit 함수는 form 태그에 */}
-      <Form onSubmit={onSubmit}>
-        <Input
-          name="email"
-          value={email}
-          onChange={onChangeInput}
-          placeholder="email"
-          type="email"
-          required
-        />
-        <Input type="submit" value={isLoading ? "Loading" : "next"} />
-        {isDone ? (
-          <Message>
-            <span>we have emailed you a link to reset your password</span>
-            <Link to={"/login"}>Log in &rarr;</Link>
-          </Message>
-        ) : null}
-      </Form>
-      {error !== "" ? <Error>{error}</Error> : null}
+      <div>
+        <Title>Find my account</Title>
+        {/* onSubmit 함수는 form 태그에 */}
+        <Form onSubmit={onSubmit}>
+          <Input
+            name="email"
+            value={email}
+            onChange={onChangeInput}
+            placeholder="email"
+            type="email"
+            required
+          />
+          <Input type="submit" value={isLoading ? "Loading" : "next"} />
+          {isDone ? (
+            <Message>
+              <span>we have emailed you a link to reset your password</span>
+              <Link to={"/login"}>Log in &rarr;</Link>
+            </Message>
+          ) : null}
+        </Form>
+        {error !== "" ? <Error>{error}</Error> : null}
+      </div>
     </Wrapper>
   );
 }
