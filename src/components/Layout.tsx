@@ -6,6 +6,8 @@ import { auth } from "../firebase";
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
+  min-height: 100vh;
+  height: 100%;
   > div {
     width: 100%;
     min-width: 480px;

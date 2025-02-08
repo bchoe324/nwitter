@@ -78,7 +78,12 @@ const JoinedDate = styled.div`
   }
 `;
 
-const TweetsWrapper = styled.div``;
+const TweetsWrapper = styled.div`
+  .no_content {
+    color: #999;
+    padding: 20px;
+  }
+`;
 
 export default function Profile() {
   const { isOpen, openModal, closeModal } = UseModal();
@@ -190,9 +195,13 @@ export default function Profile() {
         </Collumn>
       </ProfileWrapper>
       <TweetsWrapper>
-        {tweets.map((tweet) => (
-          <Tweet key={tweet.id} {...tweet} />
-        ))}
+        {!tweets.length ? (
+          <div className="no_content">
+            No tweets yet. Why not post your first tweet?
+          </div>
+        ) : (
+          tweets.map((tweet) => <Tweet key={tweet.id} {...tweet} />)
+        )}
       </TweetsWrapper>
       {/* 프로필 편집 모달 */}
       {isOpen("EditProfile") ? (
